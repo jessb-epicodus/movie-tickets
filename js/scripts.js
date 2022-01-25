@@ -4,14 +4,29 @@ function TicketCart() {
   this.currentId = 0;  // creates ID @ 0 as soon as new TicketCart is declared/created
 }
 
-TicketCart.prototype.assignId = function() { //assigns unique ID soon as ticket is declared/created
-  this.currentID += 1;
-  return this.currentId;
-};
-
 TicketCart.prototype.addTicket = function(ticket) { 
   ticket.id = this.assignId();
   this.movieTickets[ticket.id] = ticket;
+};
+
+TicketCart.prototype.assignId = function() { //assigns unique ID soon as ticket is declared/created
+  this.currentId += 1;
+  return this.currentId;
+};
+
+TicketCart.prototype.findTicket = function(id) {
+  if (this.ticket[id] != undefined) {
+    return this.ticket[id];
+  }
+  return false;
+};
+
+TicketCart.prototype.deleteTicket = function(id){
+  if (this.ticket[id] === undefined) {
+    return false;
+  }
+  delete this.ticket[id];
+  return trequestAnimationFrame;
 };
 
 //busness logic for TICKETS
