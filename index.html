@@ -5,11 +5,34 @@
   <link href="css/styles.css" rel="stylesheet" type="text/css">
   <script src="js/jqscripts.js"></script>
   <script src="js/scripts.js"></script>
-  <title>TITLE</title>
+  <title>Movie Tickets</title>
 </head>
 <body>
   <div class="container">
-    
+    <h2>Movie Ticket</h2>
+    <form id="add-ticket">
+      <label>Choose your movie:</label>
+      <select class="form-control" id="movie">
+        <option value="1"> </option>
+        <option value="2">New release</option>
+        <option value="3">Mid-run</option>
+        <option value="4">Throw back</option>
+      </select>
+      <label>Choose tme:</label>
+      <select class="form-control" id="time">
+        <option value="1"> </option>
+        <option value="2">Matinee</option>
+        <option value="3">Evening</option>
+      </select>
+      <label>Choose your age:</label>
+      <select class="form-control" id="age">
+        <option value="1"> </option>
+        <option value="2">Child</option>
+        <option value="3">Adult</option>
+        <option value="4">Senior</option>
+      </select>
+      <button type="submit" class="btn-dark">Add Ticket</button>
+    </form>
   </div>
 </body>
 </html>
