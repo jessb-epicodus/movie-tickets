@@ -4,7 +4,7 @@ function TicketCart() {
   this.currentId = 0;  // creates ID @ 0 as soon as new TicketCart is declared/created
 }
 
-TicketCart.prototype.addTicket = function(ticket) { 
+TicketCart.prototype.addTicket = function(ticket) {
   ticket.id = this.assignId();
   this.movieTickets[ticket.id] = ticket;
 };
@@ -15,18 +15,18 @@ TicketCart.prototype.assignId = function() { //assigns unique ID soon as ticket 
 };
 
 TicketCart.prototype.findTicket = function(id) {
-  if (this.ticket[id] != undefined) {
-    return this.ticket[id];
+  if (this.movieTickets[id] != undefined) {
+    return this.movieTickets[id];
   }
   return false;
 };
 
-TicketCart.prototype.deleteTicket = function(id){
-  if (this.ticket[id] === undefined) {
+TicketCart.prototype.deleteTicket = function(id) {
+  if (this.movieTickets[id] === undefined) {
     return false;
   }
-  delete this.ticket[id];
-  return trequestAnimationFrame;
+  delete this.movieTickets[id];
+  return true;
 };
 
 //busness logic for TICKETS
@@ -36,13 +36,45 @@ function NewMovieTicket (movie, time, age) {
   this.age = age;
 }
 
-NewMovieTicket.prototype.ticketDetails = function() {
-  return this.movie + " " + this.time + " " + this.age;
+//UI logic
+let cart = new TicketCart();  // global variable not always good idea but okay for now
+
+function displayTicketDetails(cartToDisplay) {
+  let ticketList = $("ul#tickets");
+  let htmlForTicketInfo = "";  //
+  Object.keys(cartToDisplay.movieTickets).forEach(function(key) {  
+    const ticket = cartToDisplay.findTicket(key);
+    htmlForTicketInfo += "<li id=" + ticket.id + ">" + "Ticket " + ticket.id + "</li>";
+  });
+  ticketList.html(htmlForTicketInfo);
+}
+
+function showTicketDetails(ticketId) {
+  const ticket = addressBook.findContact(contactId);
+  $("#show-contact").show();
+  $(".first-name").html(contact.firstName);
+  $(".last-name").html(contact.lastName);
+  $(".phone-number").html(contact.phoneNumber);
+  let buttons = $("#buttons");
+  buttons.empty();
+  buttons.append("<button class='deleteButton' id=" +  + contact.id + ">Delete</button>");
+}
+
+function attachTicketListener() {
+  $("ul#tickets").on("click", "li", function() {
+    showTicket(this.id);
+  });
 };
 
-// //UI logic
-// $(document).ready(function() {
-//   $("form#add-ticket").submit(function(event) {
-//     event.preventDefault();
-//   }
-// });
+$(document).ready(function() {
+  // attachTicketListener();
+  $("form#add-ticket").submit(function(event) {
+    event.preventDefault();
+    const inputMovie = $("#movie").val();
+    const inputTime = $("#time").val();
+    const inputAge = $("#age").val();
+    let newTicket = new NewMovieTicket(inputMovie, inputTime, inputAge);  // new Ticket objet passing in this gathered info as argumants
+    cart.addTicket(newTicket);  
+    displayTicketDetails(cart);
+  });
+});
