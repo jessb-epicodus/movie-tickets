@@ -50,24 +50,29 @@ function displayTicketDetails(cartToDisplay) {
 }
 
 function showTicketDetails(ticketId) {
-  const ticket = addressBook.findContact(contactId);
-  $("#show-contact").show();
-  $(".first-name").html(contact.firstName);
-  $(".last-name").html(contact.lastName);
-  $(".phone-number").html(contact.phoneNumber);
+  const ticket = cart.findTicket(ticketId);
+  $("#ticket-details").show();
+  $(".movie").html(ticket.movie);
+  $(".time").html(ticket.time);
+  $(".age").html(ticket.age);
   let buttons = $("#buttons");
   buttons.empty();
-  buttons.append("<button class='deleteButton' id=" +  + contact.id + ">Delete</button>");
+  buttons.append("<button class='deleteButton' id=" + ticket.id + ">Delete</button>");
 }
 
 function attachTicketListener() {
   $("ul#tickets").on("click", "li", function() {
-    showTicket(this.id);
+    showTicketDetails(this.id);
   });
-};
+  $("#buttons").on("click", ".deleteButton", function() {
+    cart.deleteTicket(this.id);
+    $("#ticket-details").hide();
+    displayTicketDetails(cart);
+  });
+}
 
 $(document).ready(function() {
-  // attachTicketListener();
+  attachTicketListener();
   $("form#add-ticket").submit(function(event) {
     event.preventDefault();
     const inputMovie = $("#movie").val();
