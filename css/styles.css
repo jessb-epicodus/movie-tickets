@@ -1,3 +1,7 @@
 #ticket-details {
   display: none;
 }
+
+#ticket-price {
+  display: none;
+}

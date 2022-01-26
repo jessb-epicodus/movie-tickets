@@ -1,7 +1,8 @@
 //busness logic for CART
 function TicketCart() {
-  this.movieTickets = {};  // object that stores NewMovieTicket objects
-  this.currentId = 0;  // creates ID @ 0 as soon as new TicketCart is declared/created
+  this.movieTickets = {};
+  this.currentId = 0;
+  // this.total = 0;
 }
 
 TicketCart.prototype.addTicket = function(ticket) {
@@ -9,7 +10,7 @@ TicketCart.prototype.addTicket = function(ticket) {
   this.movieTickets[ticket.id] = ticket;
 };
 
-TicketCart.prototype.assignId = function() { //assigns unique ID soon as ticket is declared/created
+TicketCart.prototype.assignId = function() {
   this.currentId += 1;
   return this.currentId;
 };
@@ -29,12 +30,37 @@ TicketCart.prototype.deleteTicket = function(id) {
   return true;
 };
 
-//busness logic for TICKETS
-function NewMovieTicket (movie, time, age) {
-  this.movie = movie;
-  this.time = time;
-  this.age = age;
+
+
+//busness logic for ticket
+function Ticket (movieTitle, showTime, ageType) {
+  this.movieTitle = movieTitle;
+  this.showTime = showTime;
+  this.ageType = ageType;
 }
+
+// Ticket.prototype.eaPrice = function() {
+//   this.price = 5;
+//   if (this.movieTitle === "New Release"){
+//     this.price += 2;
+//   } else if (this.movieTitle === "Throwback") {
+//     //throwback tickets are standard price
+//   } 
+ 
+//   if (this.movieTime === "Evening") {
+//     this.price += 2.5;
+//   } else if (this.movieTime === "Matinee") {
+//     //matinee tickets are standard price
+//   } 
+  
+//   if (this.ageType === "Adult") {
+//     this.price += 2.5;
+//   } else if (this.ageType === "Child" || this.price === "Senior") {
+//     //child & sr ticket price is standard
+//   } 
+//   return this.price
+// }
+
 
 //UI logic
 let cart = new TicketCart();  // global variable not always good idea but okay for now
@@ -44,8 +70,8 @@ function displayTicketDetails(cartToDisplay) {
   let htmlForTicketInfo = "";  //
   Object.keys(cartToDisplay.movieTickets).forEach(function(key) {  
     const ticket = cartToDisplay.findTicket(key);
-    htmlForTicketInfo += "<li id=" + ticket.id + ">" + "Ticket " + ticket.id + "</li>";
-  });
+    htmlForTicketInfo += "<li id=" + ticket.id + ">" + ticket.ageType + " - " + ticket.movieTitle + " - "  + ticket.showTime + "</li>";
+  });  //+ price
   ticketList.html(htmlForTicketInfo);
 }
 
@@ -78,7 +104,7 @@ $(document).ready(function() {
     const inputMovie = $("#movie").val();
     const inputTime = $("#time").val();
     const inputAge = $("#age").val();
-    let newTicket = new NewMovieTicket(inputMovie, inputTime, inputAge);  // new Ticket objet passing in this gathered info as argumants
+    let newTicket = new Ticket(inputMovie, inputTime, inputAge);
     cart.addTicket(newTicket);  
     displayTicketDetails(cart);
   });
